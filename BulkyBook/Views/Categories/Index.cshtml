@@ -3,36 +3,47 @@
     ViewData["Title"] = "Categories";
 }
 
-<h1>@ViewData["Title"]</h1>
-<br />
-<table class="table table-bordered table-striped" style="width:100%">
-    <thead>
-        <tr>
-            <th>
-                Category Name
-            </th>
-            <th>
-                Display Order
-            </th>
-            <th>
-                Created DateTime
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var category in Model)
-        {
+<div class="container p-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class="text-primary">@ViewData["Title"]</h2>
+        </div>
+        <div class="col-6 text-end">
+            <a asp-controller="Categories" asp-action="Create" class="btn btn-primary">
+                <i class="bi bi-plus-circle"></i> &nbsp; Create New Category
+            </a>
+        </div>
+    </div>
+    <br /><br />
+    <table class="table table-bordered table-striped" style="width:100%">
+        <thead>
             <tr>
-                <td>
-                    @category.Name
-                </td>
-                <td>
-                    @category.DisplayOrder
-                </td>
-                <td>
-                    @category.CreatedDateTime
-                </td>
+                <th>
+                    Category Name
+                </th>
+                <th>
+                    Display Order
+                </th>
+                <th>
+                    Created DateTime
+                </th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var category in Model)
+            {
+                <tr>
+                    <td>
+                        @category.Name
+                    </td>
+                    <td>
+                        @category.DisplayOrder
+                    </td>
+                    <td>
+                        @category.CreatedDateTime.ToShortDateString()
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>    
+</div>
