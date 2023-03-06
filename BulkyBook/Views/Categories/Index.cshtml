@@ -25,22 +25,29 @@
                     Display Order
                 </th>
                 <th>
-                    Created DateTime
+                    Created Date
                 </th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
             @foreach (var category in Model)
             {
                 <tr>
-                    <td>
+                    <td class="col-3">
                         @category.Name
                     </td>
-                    <td>
+                    <td class="col-3">
                         @category.DisplayOrder
                     </td>
-                    <td>
+                    <td class="col-3">
                         @category.CreatedDateTime.ToShortDateString()
+                    </td>
+                    <td class="col-3">
+                        <div class="btn-group" role="group">
+                            <a asp-controller="Categories" asp-action="Edit" asp-route-id="@category.Id" class="btn btn-primary mx-2"><i class="bi bi-pencil-square"></i> Edit</a>
+                            <a asp-controller="Categories" asp-action="Delete" asp-route-id="@category.Id" class="btn btn-primary mx-2"><i class="bi bi-trash3"></i> Delete</a>
+                        </div>
                     </td>
                 </tr>
             }
