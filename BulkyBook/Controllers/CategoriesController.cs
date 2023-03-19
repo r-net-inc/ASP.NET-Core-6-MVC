@@ -56,16 +56,16 @@ namespace BulkyBook.Controllers
                 return NotFound();
             }
 
-            var categoryFromDb = _db.Categories.Find(id);
-            //var categoryFromDbFirst = _db.Categories.FirstOrDefault(c => c.Id == id);
+            //var categoryFromDb = _db.Categories.Find(id);
+            var categoryFromDbFirst = _db.Categories.FirstOrDefault(c => c.Id == id);
             //var categoryFromDbSingle = _db.Categories.SingleOrDefault(c => c.Id == id);
 
-            if (categoryFromDb == null)
+            if (categoryFromDbFirst == null)
             {
                 return NotFound();
             }
 
-            return View(categoryFromDb);
+            return View(categoryFromDbFirst);
         }
 
         // POST
@@ -97,14 +97,15 @@ namespace BulkyBook.Controllers
                 return NotFound();
             }
 
-            var categoryInDb = _db.Categories.Find(id);
+            //var categoryInDb = _db.Categories.Find(id);
+            var categoryFromDbFirst = _db.Categories.FirstOrDefault(c => c.Id == id);
 
-            if (categoryInDb == null)
+            if (categoryFromDbFirst == null)
             {
                 return NotFound();
             }
 
-            _db.Categories.Remove(categoryInDb);
+            _db.Categories.Remove(categoryFromDbFirst);
             _db.SaveChanges();
             TempData["success"] = "Category deleted successfully";
 
