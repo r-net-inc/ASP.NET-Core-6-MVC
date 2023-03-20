@@ -29,19 +29,19 @@ namespace BulkyBook.Controllers
         // POST
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Category cat)
+        public IActionResult Create(Category category)
         {
-            if (cat.Name == cat.DisplayOrder.ToString())
+            if (category.Name == category.DisplayOrder.ToString())
             {
                 ModelState.AddModelError("name", "The Name cannot exactly match the DisplayOrder.");
             }
 
             if (!ModelState.IsValid)
             {
-                return View(cat);
+                return View(category);
             }
 
-            _db.Categories.Add(cat);
+            _db.Categories.Add(category);
             _db.SaveChanges();
             TempData["success"] = "Category created successfully";
 
@@ -56,34 +56,34 @@ namespace BulkyBook.Controllers
                 return NotFound();
             }
 
-            var categoryFromDb = _db.Categories.Find(id);
-            //var categoryFromDbFirst = _db.Categories.FirstOrDefault(c => c.Id == id);
+            //var categoryFromDb = _db.Categories.Find(id);
+            var categoryFromDbFirst = _db.Categories.FirstOrDefault(c => c.Id == id);
             //var categoryFromDbSingle = _db.Categories.SingleOrDefault(c => c.Id == id);
 
-            if (categoryFromDb == null)
+            if (categoryFromDbFirst == null)
             {
                 return NotFound();
             }
 
-            return View(categoryFromDb);
+            return View(categoryFromDbFirst);
         }
 
         // POST
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(Category cat)
+        public IActionResult Edit(Category category)
         {
-            if (cat.Name == cat.DisplayOrder.ToString())
+            if (category.Name == category.DisplayOrder.ToString())
             {
                 ModelState.AddModelError("name", "The Name cannot exactly match the DisplayOrder.");
             }
 
             if (!ModelState.IsValid)
             {
-                return View(cat);
+                return View(category);
             }
 
-            _db.Categories.Update(cat);
+            _db.Categories.Update(category);
             _db.SaveChanges();
             TempData["success"] = "Category updated successfully";
 
