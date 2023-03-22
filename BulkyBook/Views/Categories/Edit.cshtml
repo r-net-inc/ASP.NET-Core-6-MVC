@@ -22,6 +22,7 @@
         <a asp-controller="Categories" asp-action="Index" class="btn btn-secondary" style="width:150px">Cancel</a>
         <a class="btn btn-danger js-delete" data-category-id="@Model.Id" style="width:150px">Delete</a>
     </div>
+    @Html.AntiForgeryToken()
 </form>
 
 @section Scripts {
