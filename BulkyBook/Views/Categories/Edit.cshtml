@@ -20,6 +20,7 @@
         </div>
         <button type="submit" class="btn btn-primary" style="width:150px">Update</button>
         <a asp-controller="Categories" asp-action="Index" class="btn btn-secondary" style="width:150px">Cancel</a>
+        <a asp-controller="Categories" asp-action="Delete" class="btn btn-danger" asp-route-id="@Model.Id" style="width:150px">Delete</a>
     </div>
 </form>
 
