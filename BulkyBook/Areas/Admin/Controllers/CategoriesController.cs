@@ -4,7 +4,7 @@ using BulkyBook.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 
-namespace BulkyBook.Controllers
+namespace BulkyBook.Areas.Admin.Controllers
 {
     public class CategoriesController : Controller
     {
@@ -59,7 +59,7 @@ namespace BulkyBook.Controllers
         public IActionResult Edit(int? id)
         {
             if (id == null || id == 0)
-            { 
+            {
                 return NotFound();
             }
 
