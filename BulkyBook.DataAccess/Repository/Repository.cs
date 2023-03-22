@@ -33,7 +33,7 @@ namespace BulkyBook.DataAccess.Repository
 
         public T GetFirstOrDefault(Expression<Func<T, bool>> filter)
         {
-            IEnumerable<T> query = dbSet;
+            IEnumerable<T> query = dbSet.Where(filter);
             return query.FirstOrDefault();
         }
 
