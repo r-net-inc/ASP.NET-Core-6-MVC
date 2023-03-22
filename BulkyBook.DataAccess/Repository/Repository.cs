@@ -27,13 +27,13 @@ namespace BulkyBook.DataAccess.Repository
 
         public IEnumerable<T> GetAll()
         {
-            IEnumerable<T> query = dbSet;
+            IQueryable<T> query = dbSet;
             return query.ToList();
         }
 
         public T GetFirstOrDefault(Expression<Func<T, bool>> filter)
         {
-            IEnumerable<T> query = dbSet.Where(filter);
+            IQueryable<T> query = dbSet.Where(filter);
             return query.FirstOrDefault();
         }
 
