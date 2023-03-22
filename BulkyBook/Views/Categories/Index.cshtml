@@ -3,6 +3,8 @@
     ViewData["Title"] = "Categories";
 }
 
+<partial name="_Notifications" />
+
 <div class="container p-3">
     <div class="row pt-4">
         <div class="col-6">
@@ -15,7 +17,7 @@
         </div>
     </div>
     <br /><br />
-    <table class="table table-bordered table-striped" style="width:100%">
+    <table id="categories" class="table table-bordered table-striped" style="width:100%">
         <thead>
             <tr>
                 <th class="col-5">
@@ -47,7 +49,7 @@
                     <td class="text-center">
                         <div class="btn-group" role="group">
                             <a asp-controller="Categories" asp-action="Edit" asp-route-id="@category.Id" class="btn btn-primary mx-2"><i class="bi bi-pencil-square"></i> Edit</a>
-                            <a asp-controller="Categories" asp-action="Delete" asp-route-id="@category.Id" class="btn btn-danger mx-2"><i class="bi bi-trash3"></i> Delete</a>
+                            <a class="btn btn-danger mx-2 js-delete" data-category-id="@category.Id"><i class="bi bi-trash3"></i> Delete</a>
                         </div>
                     </td>
                 </tr>
@@ -55,3 +57,8 @@
         </tbody>
     </table>    
 </div>
+
+@section Scripts
+{
+    <partial name="_Alerts" />
+}
