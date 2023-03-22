@@ -17,6 +17,7 @@ namespace BulkyBook.DataAccess.Repository
         public Repository(ApplicationDbContext db)
         {
             _db = db;
+            this.dbSet = _db.Set<T>();
         }
 
         public void Add(T entity)
@@ -26,14 +27,13 @@ namespace BulkyBook.DataAccess.Repository
 
         public IEnumerable<T> GetAll()
         {
-            IQueryable<T> query = dbSet;
+            IEnumerable<T> query = dbSet;
             return query.ToList();
         }
 
         public T GetFirstOrDefault(Expression<Func<T, bool>> filter)
         {
-            IQueryable<T> query = dbSet;
-            query = query.Where(filter);
+            IEnumerable<T> query = dbSet;
             return query.FirstOrDefault();
         }
 
