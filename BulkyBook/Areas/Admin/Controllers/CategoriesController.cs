@@ -6,6 +6,7 @@ using System.Linq;
 
 namespace BulkyBook.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class CategoriesController : Controller
     {
         //private readonly ApplicationDbContext _db;
