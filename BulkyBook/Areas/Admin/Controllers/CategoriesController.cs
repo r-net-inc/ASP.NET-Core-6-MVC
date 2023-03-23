@@ -39,7 +39,7 @@ namespace BulkyBook.Areas.Admin.Controllers
         {
             if (category.Name == category.DisplayOrder.ToString())
             {
-                ModelState.AddModelError("name", "The Name cannot exactly match the DisplayOrder.");
+                ModelState.AddModelError("name", "The Name cannot exactly match the Display Order.");
             }
 
             if (!ModelState.IsValid)
@@ -84,7 +84,7 @@ namespace BulkyBook.Areas.Admin.Controllers
         {
             if (category.Name == category.DisplayOrder.ToString())
             {
-                ModelState.AddModelError("name", "The Name cannot exactly match the DisplayOrder.");
+                ModelState.AddModelError("name", "The Name cannot exactly match the Display Order.");
             }
 
             if (!ModelState.IsValid)
