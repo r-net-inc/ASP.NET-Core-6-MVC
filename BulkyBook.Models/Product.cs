@@ -24,6 +24,7 @@ namespace BulkyBook.Models
         public string Author { get; set; }
 
         [Required]
+        [Display(Name = "List Price")]
         [Range(1, 10000)]
         public double ListPrice { get; set; }
 
@@ -39,15 +40,18 @@ namespace BulkyBook.Models
         [Range(1, 10000)]
         public double Price100 { get; set; }
 
+        [Display(Name = "Image URL")]
         public string ImageUrl { get; set; }
 
         [Required]
+        [Display(Name = "Category")]
         public int CategoryId { get; set; }
 
         [ForeignKey("CategoryId")]
         public Category Category { get; set; }
 
         [Required]
+        [Display(Name = "Cover Type")]
         public int CoverTypeId { get; set; }
 
         public CoverType CoverType { get; set; }

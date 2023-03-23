@@ -30,13 +30,15 @@ namespace BulkyBook.Areas.Admin.Controllers
         public IActionResult Upsert(int? id)
         {
             Product product = new();
-            IEnumerable<SelectListItem> CategoryList = _unitOfWork.Category.GetAll().Select(
+
+            IEnumerable<SelectListItem> CategoriesList = _unitOfWork.Category.GetAll().Select(
                 c => new SelectListItem
                 {
                     Text = c.Name,
                     Value = c.Id.ToString()
                 });
-            IEnumerable<SelectListItem> CoverTypeList = _unitOfWork.CoverType.GetAll().Select(
+
+            IEnumerable<SelectListItem> CoverTypesList = _unitOfWork.CoverType.GetAll().Select(
                 c => new SelectListItem
                 {
                     Text = c.Name,
@@ -46,11 +48,14 @@ namespace BulkyBook.Areas.Admin.Controllers
             if (id == null || id == 0)
             {
                 // Create Product
+                ViewBag.Title = "Create Product";
+                ViewBag.CategoriesList = CategoriesList;
                 return View(product);
             }
             else
             {
                 // Update Product
+                ViewBag.Title = "Edit Product";
                 return View(product);
             }
         }
