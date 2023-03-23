@@ -46,7 +46,7 @@ namespace BulkyBook.Areas.Admin.Controllers
             //        Value = c.Id.ToString()
             //    });
 
-            ProductViewModel productVM = new()
+            var productVM = new ProductViewModel()
             {
                 Product = new(),
                 CategoriesList = _unitOfWork.Category.GetAll().Select(i => new SelectListItem
@@ -80,15 +80,15 @@ namespace BulkyBook.Areas.Admin.Controllers
         // POST
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Update(CoverType coverType)
+        public IActionResult Upsert(ProductViewModel productVM, IFormFile file)
         {
             if (!ModelState.IsValid)
             {
-                return View(coverType);
+                return View(productVM);
             }
 
             //_db.Categories.Update(category);
-            _unitOfWork.CoverType.Update(coverType);
+            _unitOfWork.Product.Update(productVM.Product);
             //_db.SaveChanges();
             _unitOfWork.Save();
             TempData["success"] = "Cover Type updated successfully";
