@@ -1,6 +1,7 @@
 ﻿using BulkyBook.DataAccess;
 using BulkyBook.DataAccess.Repository.IRepository;
 using BulkyBook.Models;
+using BulkyBook.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Linq;
@@ -29,35 +30,50 @@ namespace BulkyBook.Areas.Admin.Controllers
         // GET
         public IActionResult Upsert(int? id)
         {
-            Product product = new();
+            //Product Product = new();
 
-            IEnumerable<SelectListItem> CategoriesList = _unitOfWork.Category.GetAll().Select(
-                c => new SelectListItem
-                {
-                    Text = c.Name,
-                    Value = c.Id.ToString()
-                });
+            //IEnumerable<SelectListItem> CategoriesList = _unitOfWork.Category.GetAll().Select(
+            //    c => new SelectListItem
+            //    {
+            //        Text = c.Name,
+            //        Value = c.Id.ToString()
+            //    });
 
-            IEnumerable<SelectListItem> CoverTypesList = _unitOfWork.CoverType.GetAll().Select(
-                c => new SelectListItem
+            //IEnumerable<SelectListItem> CoverTypesList = _unitOfWork.CoverType.GetAll().Select(
+            //    c => new SelectListItem
+            //    {
+            //        Text = c.Name,
+            //        Value = c.Id.ToString()
+            //    });
+
+            ProductViewModel productVM = new()
+            {
+                Product = new(),
+                CategoriesList = _unitOfWork.Category.GetAll().Select(i => new SelectListItem
                 {
-                    Text = c.Name,
-                    Value = c.Id.ToString()
-                });
+                    Text = i.Name,
+                    Value = i.Id.ToString()
+                }),
+                CoverTypesList = _unitOfWork.CoverType.GetAll().Select(i => new SelectListItem
+                {
+                    Text = i.Name,
+                    Value = i.Id.ToString()
+                }),
+            };
 
             if (id == null || id == 0)
             {
                 // Create Product
                 ViewBag.Title = "Create Product";
-                ViewBag.CategoriesList = CategoriesList;
-                ViewData["CoverTypesList"] = CoverTypesList;
-                return View(product);
+                //ViewBag.CategoriesList = CategoriesList;
+                //ViewData["CoverTypesList"] = CoverTypesList;
+                return View(productVM);
             }
             else
             {
                 // Update Product
                 ViewBag.Title = "Edit Product";
-                return View(product);
+                return View(productVM);
             }
         }
 
