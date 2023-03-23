@@ -26,21 +26,19 @@ namespace BulkyBook.Areas.Admin.Controllers
         }
 
         // GET
-        public IActionResult Edit(int? id)
+        public IActionResult Upsert(int? id)
         {
+            Product product = new();
             if (id == null || id == 0)
             {
-                return NotFound();
+                // Create Product
+                return View(product);
             }
-
-            var coverTypeFromDbFirst = _unitOfWork.CoverType.GetFirstOrDefault(c => c.Id == id);
-
-            if (coverTypeFromDbFirst == null)
+            else
             {
-                return NotFound();
+                // Update Product
+                return View(product);
             }
-
-            return View(coverTypeFromDbFirst);
         }
 
         // POST
