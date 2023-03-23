@@ -50,12 +50,29 @@
         </div>
         <div class="mb-3">
             <label asp-for="CategoryId"></label>
-            <select asp-for="CategoryId" asp-items="ViewBag.CategoriesList" class="form-select"></select>
+            <select asp-for="CategoryId" asp-items="ViewBag.CategoriesList" class="form-select">
+                <option disabled selected>--Select Category--</option>
+            </select>
             <span asp-validation-for="CategoryId" class="text-danger"></span>
         </div>
-        <button type="submit" class="btn btn-primary" style="width:150px">Update</button>
-        <a asp-area="Admin" asp-controller="Products" asp-action="Index" class="btn btn-secondary" style="width:150px">Cancel</a>
-        <a class="btn btn-danger js-delete" data-coverType-id="@Model.Id" style="width:150px">Delete</a>
+        <div class="mb-3">
+            <label asp-for="CoverTypeId"></label>
+            <select asp-for="CoverTypeId" asp-items="@(ViewData["CoverTypesList"] as IEnumerable<SelectListItem>)" class="form-select">
+                <option disabled selected>--Select Cover Type--</option>
+            </select>
+            <span asp-validation-for="CoverTypeId" class="text-danger"></span>
+        </div>
+        @if (ViewBag.Title == "Create Product")
+        {
+            <button type="submit" class="btn btn-primary" style="width:150px">Save</button>
+            <a asp-area="Admin" asp-controller="Products" asp-action="Index" class="btn btn-secondary" style="width:150px">Cancel</a>
+        }
+        else
+        {
+            <button type="submit" class="btn btn-primary" style="width:150px">Update</button>
+            <a asp-area="Admin" asp-controller="Products" asp-action="Index" class="btn btn-secondary" style="width:150px">Cancel</a>
+            <a class="btn btn-danger js-delete" data-coverType-id="Id" style="width:150px">Delete</a>
+        }
     </div>
     @Html.AntiForgeryToken()
 </form>
