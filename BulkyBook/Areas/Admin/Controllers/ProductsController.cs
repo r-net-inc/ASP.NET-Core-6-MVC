@@ -51,15 +51,15 @@ namespace BulkyBook.Areas.Admin.Controllers
             var productVM = new ProductViewModel()
             {
                 Product = new(),
-                CategoriesList = _unitOfWork.Category.GetAll().Select(i => new SelectListItem
+                CategoriesList = _unitOfWork.Category.GetAll().Select(c => new SelectListItem
                 {
-                    Text = i.Name,
-                    Value = i.Id.ToString()
+                    Text = c.Name,
+                    Value = c.Id.ToString()
                 }),
-                CoverTypesList = _unitOfWork.CoverType.GetAll().Select(i => new SelectListItem
+                CoverTypesList = _unitOfWork.CoverType.GetAll().Select(c => new SelectListItem
                 {
-                    Text = i.Name,
-                    Value = i.Id.ToString()
+                    Text = c.Name,
+                    Value = c.Id.ToString()
                 }),
             };
 
@@ -75,6 +75,7 @@ namespace BulkyBook.Areas.Admin.Controllers
             {
                 // Update Product
                 //ViewBag.Title = "Edit Product";
+                productVM.Product = _unitOfWork.Product.GetFirstOrDefault(p => p.Id == id);
                 return View(productVM);
             }
         }
