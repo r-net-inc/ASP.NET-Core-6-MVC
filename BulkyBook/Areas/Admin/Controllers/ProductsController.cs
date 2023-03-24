@@ -124,35 +124,13 @@ namespace BulkyBook.Areas.Admin.Controllers
                 //_unitOfWork.Product.Add(productVM.Product);
                 //_db.SaveChanges();
                 _unitOfWork.Save();
-                TempData["success"] = "Product created successfully";
+                TempData["success"] = "Product created successfully!";
                 return RedirectToAction("Index");
             }
 
             return View(productVM);
         }
 
-        public IActionResult Delete(int? id)
-        {
-            if (id == null || id == 0)
-            {
-                return NotFound();
-            }
-
-            var coverTypeInDb = _unitOfWork.CoverType.GetFirstOrDefault(u => u.Id == id);
-
-            if (coverTypeInDb == null)
-            {
-                return NotFound();
-            }
-
-            //_db.Categories.Remove(categoryInDb);
-            _unitOfWork.CoverType.Remove(coverTypeInDb);
-            //_db.SaveChanges();
-            _unitOfWork.Save();
-            TempData["success"] = "Cover Type deleted successfully";
-
-            return RedirectToAction("Index");
-        }
 
         #region API CALLS
         [HttpGet]
@@ -160,6 +138,35 @@ namespace BulkyBook.Areas.Admin.Controllers
         {
             var productsList = _unitOfWork.Product.GetAll(includeProperties: "Category,CoverType");
             return Json(new { data = productsList });
+        }
+
+        [HttpDelete]
+        public IActionResult Delete(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return Json(new { success = false, message = "Error while deleting!" });
+            }
+
+            var productTypeInDb = _unitOfWork.Product.GetFirstOrDefault(c => c.Id == id);
+
+            if (productTypeInDb == null)
+            {
+                return Json(new { success = false, message = "Error while deleting!" });
+            }
+
+            var oldImagePath = Path.Combine(_hostEnvironment.WebRootPath, productTypeInDb.ImageUrl.TrimStart('\\'));
+
+            if (System.IO.File.Exists(oldImagePath))
+            {
+                System.IO.File.Delete(oldImagePath);
+            }
+
+            //_db.Categories.Remove(categoryInDb);
+            _unitOfWork.Product.Remove(productTypeInDb);
+            //_db.SaveChanges();
+            _unitOfWork.Save();
+            return Json(new { success = true, message = "Product deleted successfully!" });
         }
         #endregion
     }
