@@ -129,7 +129,6 @@
                         success: function (data) {
                             if (data.success) {
                                 window.location.assign("/Admin/Products/");
-                                toastr.success(data.message);
                             }
                             else {
                                 toastr.error(data.message);

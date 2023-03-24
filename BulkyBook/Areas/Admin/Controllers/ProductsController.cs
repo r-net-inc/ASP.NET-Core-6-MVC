@@ -165,6 +165,7 @@ namespace BulkyBook.Areas.Admin.Controllers
 
             //_db.Categories.Remove(categoryInDb);
             _unitOfWork.Product.Remove(productTypeInDb);
+            TempData["success"] = "Product deleted successfully!";
             //_db.SaveChanges();
             _unitOfWork.Save();
 
