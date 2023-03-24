@@ -4,7 +4,7 @@
     <input asp-for="Product.Id" hidden />
     <div class="border p-3 mt-4 row">
         <div class="row pb-2">
-            <h2 class="text-primary">@ViewBag.Title</h2>
+            <h2 class="text-primary">@(Model.Product.Id != 0 ? "Update Product" : "Create Product")</h2>
             <hr />
         </div>
         @*<div asp-validation-summary="All" class="text-danger"></div>*@
@@ -66,19 +66,19 @@
             </select>
             <span asp-validation-for="Product.CoverTypeId" class="text-danger"></span>
         </div>
-        @if (ViewBag.Title == "Create Product")
-        {
-            <div class="col-12">
-                <button type="submit" class="btn btn-primary" style="width:150px">Save</button>
-                <a asp-area="Admin" asp-controller="Products" asp-action="Index" class="btn btn-secondary" style="width:150px">Cancel</a>
-            </div>
-        }
-        else
+        @if (Model.Product.Id != 0)
         {
             <div class="col-12">
                 <button type="submit" class="btn btn-primary" style="width:150px">Update</button>
                 <a asp-area="Admin" asp-controller="Products" asp-action="Index" class="btn btn-secondary" style="width:150px">Cancel</a>
                 <a class="btn btn-danger js-delete" data-coverType-id="Id" style="width:150px">Delete</a>
+            </div>
+        }
+        else
+        {
+            <div class="col-12">
+                <button type="submit" onclick="return ValidateInput()" class="btn btn-primary" style="width:150px">Save</button>
+                <a asp-area="Admin" asp-controller="Products" asp-action="Index" class="btn btn-secondary" style="width:150px">Cancel</a>
             </div>
         }
     </div>
@@ -89,6 +89,18 @@
     <partial name="_ValidationScriptsPartial" />
     <script src="~/js/bootbox.min.js"></script>
     <script>
+        function ValidateInput () {
+            if (document.getElementById("uploadBox").value == "") {
+                swal({
+                    title: "Oops...",
+                    text: "Please choose an image to upload!",
+                    icon: "error",
+                });
+                return false;
+            }
+            return true;
+        }
+        
         $(document).on('click', '.js-delete', function () {
             var button = $(this);
 

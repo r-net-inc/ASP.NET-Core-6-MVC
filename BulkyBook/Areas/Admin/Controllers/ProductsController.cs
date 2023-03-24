@@ -64,7 +64,7 @@ namespace BulkyBook.Areas.Admin.Controllers
             if (id == null || id == 0)
             {
                 // Create Product
-                ViewBag.Title = "Create Product";
+                //ViewBag.Title = "Create Product";
                 //ViewBag.CategoriesList = CategoriesList;
                 //ViewData["CoverTypesList"] = CoverTypesList;
                 return View(productVM);
@@ -72,7 +72,7 @@ namespace BulkyBook.Areas.Admin.Controllers
             else
             {
                 // Update Product
-                ViewBag.Title = "Edit Product";
+                //ViewBag.Title = "Edit Product";
                 return View(productVM);
             }
         }
@@ -88,7 +88,7 @@ namespace BulkyBook.Areas.Admin.Controllers
             }
 
             //_db.Categories.Update(category);
-            _unitOfWork.Product.Update(productVM.Product);
+            //_unitOfWork.Product.Update(productVM.Product);
             //_db.SaveChanges();
             _unitOfWork.Save();
             TempData["success"] = "Cover Type updated successfully";
