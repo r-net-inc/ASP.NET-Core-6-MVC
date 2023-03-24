@@ -1,4 +1,4 @@
-﻿var dataTable;
+﻿let dataTable;
 
 $(document).ready(function () {
     loadDataTable()
@@ -20,7 +20,7 @@ function loadDataTable() {
                 render: function (data) {
                     return `
                         <div class="btn-group" role="group">
-                            <a href="/Admin/Products/Upsert?id=${data}" class="btn btn-primary mx-2"><i class="bi bi-pencil-square"></i>Edit</a>
+                            <a href="/Admin/Products/Upsert/${data}" class="btn btn-primary mx-2"><i class="bi bi-pencil-square"></i>Edit</a>
                             <a onClick=Delete('/Admin/Products/Delete/${data}') class="btn btn-danger mx-2"><i class="bi bi-trash3"></i>Delete</a>
                         </div>
                     `
@@ -32,8 +32,6 @@ function loadDataTable() {
 }
 
 function Delete(url) {
-    var button = $(this);
-
     swal({
         title: "Are you sure?",
         text: "You will not be able to recover this product!",
@@ -47,8 +45,7 @@ function Delete(url) {
                 type: 'DELETE',
                 success: function (data) {
                     if (data.success) {
-                        //dataTable.ajax.reload();
-                        dataTable.row(button.parents("tr")).remove().draw();
+                        dataTable.ajax.reload();
                         toastr.success(data.message);
                     }
                     else {

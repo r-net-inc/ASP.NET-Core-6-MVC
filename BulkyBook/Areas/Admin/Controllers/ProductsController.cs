@@ -166,6 +166,7 @@ namespace BulkyBook.Areas.Admin.Controllers
             _unitOfWork.Product.Remove(productTypeInDb);
             //_db.SaveChanges();
             _unitOfWork.Save();
+
             return Json(new { success = true, message = "Product deleted successfully!" });
         }
         #endregion

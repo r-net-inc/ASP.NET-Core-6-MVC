@@ -76,7 +76,7 @@
                         <div class="col-12">
                             <button type="submit" class="btn btn-primary" style="width:150px">Update</button>
                             <a asp-area="Admin" asp-controller="Products" asp-action="Index" class="btn btn-secondary" style="width:150px">Cancel</a>
-                            <a class="btn btn-danger js-delete" data-coverType-id="Id" style="width:150px">Delete</a>
+                            <a class="btn btn-danger js-delete" data-product-id="@Model.Product.Id" style="width:150px">Delete</a>
                         </div>
                     }
                     else
