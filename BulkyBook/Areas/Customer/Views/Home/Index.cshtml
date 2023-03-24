@@ -1,15 +1,32 @@
-﻿@{
+﻿@model IEnumerable<Product>
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome to BulkyBook!</h1>
-    <br />
-    <h3>
-        This site is currently under construction.
-        <br />
-        Please check back again soon for updates.
-    </h3>
-    <br />
-    <p><a href="https://docs.microsoft.com/aspnet/core">A web app built with ASP.NET Core</a>.</p>
+<div class="row pb-3">
+    @foreach (var product in Model)
+    {
+        <div class="col-lg-3 col-md-6 col-sm-12">
+            <div class="row p-2">
+                <div class="col-12 p-1" style="border: 1px solid #008cba; border-radius: 5px;">
+                    <div class="card">
+                        <img src="@product.ImageUrl" class="card-img-top rounded" />
+                        <div class="card-body">
+                            <div class="pl-1 pt-1">
+                                <p class="card-title h5 text-primary">@product.Title</p>
+                                <p class="card-subtitle text-info">By: <b>@product.Author</b></p>
+                            </div>
+                            <div class="pl-1 pt-2">
+                                <p>List Price: <strike><b>$@product.ListPrice.ToString("0.00")</b></strike></p>
+                            </div>
+                            <div class="pl-1">
+                                <p>As low as: <b>$@product.Price100.ToString("0.00")</b></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="btn btn-primary form-control" asp-action="Details" asp-route-id="@product.Id">Details</div>
+                </div>
+            </div>
+        </div>
+    }
 </div>

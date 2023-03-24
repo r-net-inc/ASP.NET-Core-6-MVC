@@ -137,8 +137,8 @@ namespace BulkyBook.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            var productsList = _unitOfWork.Product.GetAll(includeProperties: "Category,CoverType");
-            return Json(new { data = productsList });
+            var products = _unitOfWork.Product.GetAll(includeProperties: "Category,CoverType");
+            return Json(new { data = products });
         }
 
         [HttpDelete]
@@ -149,14 +149,14 @@ namespace BulkyBook.Areas.Admin.Controllers
                 return Json(new { success = false, message = "Error while deleting!" });
             }
 
-            var productTypeInDb = _unitOfWork.Product.GetFirstOrDefault(c => c.Id == id);
+            var productInDb = _unitOfWork.Product.GetFirstOrDefault(c => c.Id == id);
 
-            if (productTypeInDb == null)
+            if (productInDb == null)
             {
                 return Json(new { success = false, message = "Error while deleting!" });
             }
 
-            var oldImagePath = Path.Combine(_hostEnvironment.WebRootPath, productTypeInDb.ImageUrl.TrimStart('\\'));
+            var oldImagePath = Path.Combine(_hostEnvironment.WebRootPath, productInDb.ImageUrl.TrimStart('\\'));
 
             if (System.IO.File.Exists(oldImagePath))
             {
@@ -164,7 +164,7 @@ namespace BulkyBook.Areas.Admin.Controllers
             }
 
             //_db.Categories.Remove(categoryInDb);
-            _unitOfWork.Product.Remove(productTypeInDb);
+            _unitOfWork.Product.Remove(productInDb);
             TempData["success"] = "Product deleted successfully!";
             //_db.SaveChanges();
             _unitOfWork.Save();
