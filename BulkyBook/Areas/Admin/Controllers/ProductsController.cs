@@ -13,18 +13,20 @@ namespace BulkyBook.Areas.Admin.Controllers
     {
         //private readonly ApplicationDbContext _db;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IWebHostEnvironment _hostEnvironment;
 
         //public CategoriesController(ApplicationDbContext db)
-        public ProductsController(IUnitOfWork unitOfWork)
+        public ProductsController(IUnitOfWork unitOfWork, IWebHostEnvironment hostEnvironment)
         {
             _unitOfWork = unitOfWork;
+            _hostEnvironment = hostEnvironment;
         }
 
         public IActionResult Index()
         {
-            IEnumerable<CoverType> coverTypes = _unitOfWork.CoverType.GetAll();
+            IEnumerable<Product> products = _unitOfWork.Product.GetAll();
 
-            return View(coverTypes);
+            return View(products);
         }
 
         // GET
@@ -80,18 +82,30 @@ namespace BulkyBook.Areas.Admin.Controllers
         // POST
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Upsert(ProductViewModel productVM, IFormFile file)
+        public IActionResult Upsert(ProductViewModel productVM, IFormFile? file)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                return View(productVM);
-            }
+                string wwwRootPath = _hostEnvironment.WebRootPath;
+                if (file != null)
+                {
+                    string fileName = Guid.NewGuid().ToString();
+                    var uploadPath = Path.Combine(wwwRootPath, @"images\products");
+                    var fileExtension = Path.GetExtension(file.FileName);
 
-            //_db.Categories.Update(category);
-            //_unitOfWork.Product.Update(productVM.Product);
-            //_db.SaveChanges();
-            _unitOfWork.Save();
-            TempData["success"] = "Cover Type updated successfully";
+                    using (var fileStreams = new FileStream(Path.Combine(uploadPath, fileName + fileExtension), FileMode.Create))
+                    {
+                        file.CopyTo(fileStreams);
+                    }
+
+                    productVM.Product.ImageUrl = @"\images\products\" + fileName + fileExtension;
+                }
+                //_db.Categories.Update(category);
+                _unitOfWork.Product.Add(productVM.Product);
+                //_db.SaveChanges();
+                _unitOfWork.Save();
+                TempData["success"] = "Product created successfully";
+            }
 
             return RedirectToAction("Index");
         }
