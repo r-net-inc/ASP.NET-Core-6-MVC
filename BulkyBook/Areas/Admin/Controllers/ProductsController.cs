@@ -115,16 +115,17 @@ namespace BulkyBook.Areas.Admin.Controllers
                 if (productVM.Product.Id == 0)
                 {
                     _unitOfWork.Product.Add(productVM.Product);
+                    TempData["success"] = "Product created successfully!";
                 }
                 else
                 {
                     _unitOfWork.Product.Update(productVM.Product);
+                    TempData["success"] = "Product updated successfully!";
                 }
                 //_db.Categories.Update(category);
                 //_unitOfWork.Product.Add(productVM.Product);
                 //_db.SaveChanges();
                 _unitOfWork.Save();
-                TempData["success"] = "Product created successfully!";
                 return RedirectToAction("Index");
             }
 

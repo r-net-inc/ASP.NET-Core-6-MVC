@@ -21,7 +21,7 @@ function loadDataTable() {
                     return `
                         <div class="btn-group" role="group">
                             <a href="/Admin/Products/Upsert/${data}" class="btn btn-primary mx-2"><i class="bi bi-pencil-square"></i>Edit</a>
-                            <a onClick=Delete('/Admin/Products/Delete/${data}') class="btn btn-danger mx-2"><i class="bi bi-trash3"></i>Delete</a>
+                            <a class="btn btn-danger mx-2 js-delete" data-product-id="${data}"><i class="bi bi-trash3"></i>Delete</a>
                         </div>
                     `
                 },
@@ -31,7 +31,35 @@ function loadDataTable() {
     });
 }
 
-function Delete(url) {
+//function Delete(url) {
+//    swal({
+//        title: "Are you sure?",
+//        text: "You will not be able to recover this product!",
+//        icon: "warning",
+//        buttons: true,
+//        dangerMode: true,
+//    }).then((result) => {
+//        if (result) {
+//            $.ajax({
+//                url: url,
+//                type: 'DELETE',
+//                success: function (data) {
+//                    if (data.success) {
+//                        dataTable.ajax.reload();
+//                        toastr.success(data.message);
+//                    }
+//                    else {
+//                        toastr.error(data.message);
+//                    }
+//                }
+//            })
+//        }
+//    })
+//}
+
+$(document).on('click', '.js-delete', function () {
+    let button = $(this);
+
     swal({
         title: "Are you sure?",
         text: "You will not be able to recover this product!",
@@ -41,7 +69,7 @@ function Delete(url) {
     }).then((result) => {
         if (result) {
             $.ajax({
-                url: url,
+                url: '/Admin/Products/Delete/' + button.attr("data-product-id"),
                 type: 'DELETE',
                 success: function (data) {
                     if (data.success) {
@@ -55,7 +83,7 @@ function Delete(url) {
             })
         }
     })
-}
+})
 
 //$(document).on('click', '.js-delete', function () {
 //    var button = $(this);
