@@ -2,6 +2,7 @@
 using BulkyBook.DataAccess.Repository.IRepository;
 using BulkyBook.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting;
 using System.Linq;
 
 namespace BulkyBook.Areas.Admin.Controllers
@@ -101,29 +102,29 @@ namespace BulkyBook.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
-        public IActionResult Delete(int? id)
-        {
-            if (id == null || id == 0)
-            {
-                return NotFound();
-            }
+        //public IActionResult Delete(int? id)
+        //{
+        //    if (id == null || id == 0)
+        //    {
+        //        return NotFound();
+        //    }
 
-            //var categoryInDb = _db.Categories.Find(id);
-            var categoryInDb = _unitOfWork.Category.GetFirstOrDefault(u => u.Id == id);
+        //    //var categoryInDb = _db.Categories.Find(id);
+        //    var categoryInDb = _unitOfWork.Category.GetFirstOrDefault(u => u.Id == id);
 
-            if (categoryInDb == null)
-            {
-                return NotFound();
-            }
+        //    if (categoryInDb == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            //_db.Categories.Remove(categoryInDb);
-            _unitOfWork.Category.Remove(categoryInDb);
-            //_db.SaveChanges();
-            _unitOfWork.Save();
-            TempData["success"] = "Category deleted successfully";
+        //    //_db.Categories.Remove(categoryInDb);
+        //    _unitOfWork.Category.Remove(categoryInDb);
+        //    //_db.SaveChanges();
+        //    _unitOfWork.Save();
+        //    TempData["success"] = "Category deleted successfully";
 
-            return RedirectToAction("Index");
-        }
+        //    return RedirectToAction("Index");
+        //}
 
         #region API CALLS
         [HttpGet]
@@ -131,6 +132,30 @@ namespace BulkyBook.Areas.Admin.Controllers
         {
             var categories = _unitOfWork.Category.GetAll();
             return Json(new { data = categories });
+        }
+
+        [HttpDelete]
+        public IActionResult Delete(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return Json(new { success = false, message = "Error while deleting!" });
+            }
+
+            var categoryInDb = _unitOfWork.Category.GetFirstOrDefault(c => c.Id == id);
+
+            if (categoryInDb == null)
+            {
+                return Json(new { success = false, message = "Error while deleting!" });
+            }
+
+            //_db.Categories.Remove(categoryInDb);
+            _unitOfWork.Category.Remove(categoryInDb);
+            TempData["success"] = "Category deleted successfully!";
+            //_db.SaveChanges();
+            _unitOfWork.Save();
+
+            return Json(new { success = true, message = "Category deleted successfully!" });
         }
         #endregion
     }
