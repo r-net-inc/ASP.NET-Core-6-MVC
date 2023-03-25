@@ -14,7 +14,7 @@ function loadDataTable() {
             { data: 'displayOrder', width: '25%' },
             {
                 data: 'createdDateTime',
-                render: DataTable.render.datetime('MMMM DD YYYY'),
+                render: DataTable.render.datetime('lll'),
                 width: '25%'
             },
             {
