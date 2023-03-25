@@ -36,8 +36,14 @@ namespace BulkyBook.Areas.Admin.Controllers
             }
             else
             {
-                var category = _unitOfWork.Category.GetFirstOrDefault(p => p.Id == id);
-                return View(category);
+                var categoryFromDb = _unitOfWork.Category.GetFirstOrDefault(p => p.Id == id);
+
+                if (categoryFromDb == null)
+                {
+                    return NotFound();
+                }
+
+                return View(categoryFromDb);
             }
         }
 

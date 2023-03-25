@@ -9,10 +9,8 @@ namespace BulkyBook.Areas.Admin.Controllers
     [Area("Admin")]
     public class CoverTypesController : Controller
     {
-        //private readonly ApplicationDbContext _db;
         private readonly IUnitOfWork _unitOfWork;
 
-        //public CategoriesController(ApplicationDbContext db)
         public CoverTypesController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
@@ -26,88 +24,80 @@ namespace BulkyBook.Areas.Admin.Controllers
         }
 
         // GET
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        // POST
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Create(CoverType coverType)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(coverType);
-            }
-
-            //_db.CoverType.Add(coverType);
-            _unitOfWork.CoverType.Add(coverType);
-            //_db.SaveChanges();
-            _unitOfWork.Save();
-            TempData["success"] = "Cover Type created successfully";
-
-            return RedirectToAction("Index");
-        }
-
-        // GET
-        public IActionResult Edit(int? id)
+        public IActionResult Upsert(int? id)
         {
             if (id == null || id == 0)
             {
-                return NotFound();
+                var coverType = new CoverType();
+                return View(coverType);
             }
-
-            var coverTypeFromDbFirst = _unitOfWork.CoverType.GetFirstOrDefault(c => c.Id == id);
-
-            if (coverTypeFromDbFirst == null)
+            else
             {
-                return NotFound();
-            }
+                var coverTypeFromDb = _unitOfWork.CoverType.GetFirstOrDefault(c => c.Id == id);
 
-            return View(coverTypeFromDbFirst);
+                if (coverTypeFromDb == null)
+                {
+                    return NotFound();
+                }
+
+                return View(coverTypeFromDb);
+            }
         }
 
         // POST
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Update(CoverType coverType)
+        public IActionResult Upsert(CoverType coverType)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                return View(coverType);
+                if (coverType.Id == 0)
+                {
+                    _unitOfWork.CoverType.Add(coverType);
+                    TempData["success"] = "Cover Type created successfully!";
+                }
+                else
+                {
+                    _unitOfWork.CoverType.Update(coverType);
+                    TempData["success"] = "Cover Type updated successfully!";
+                }
+
+                _unitOfWork.Save();
+                return RedirectToAction("Index");
             }
 
-            //_db.Categories.Update(category);
-            _unitOfWork.CoverType.Update(coverType);
-            //_db.SaveChanges();
-            _unitOfWork.Save();
-            TempData["success"] = "Cover Type updated successfully";
-
-            return RedirectToAction("Index");
+            return View(coverType);
         }
 
+        #region API CALLS
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            var coverTypes = _unitOfWork.CoverType.GetAll();
+            return Json(new { data = coverTypes });
+        }
+
+        [HttpDelete]
         public IActionResult Delete(int? id)
         {
             if (id == null || id == 0)
             {
-                return NotFound();
+                return Json(new { success = false, message = "Invalid Id!" });
             }
 
-            var coverTypeInDb = _unitOfWork.CoverType.GetFirstOrDefault(u => u.Id == id);
+            var coverTypeInDb = _unitOfWork.CoverType.GetFirstOrDefault(c => c.Id == id);
 
             if (coverTypeInDb == null)
             {
-                return NotFound();
+                return Json(new { success = false, message = "Cover Type not found!" });
             }
 
-            //_db.Categories.Remove(categoryInDb);
             _unitOfWork.CoverType.Remove(coverTypeInDb);
-            //_db.SaveChanges();
+            TempData["success"] = "Cover Type deleted successfully!";
             _unitOfWork.Save();
-            TempData["success"] = "Cover Type deleted successfully";
 
-            return RedirectToAction("Index");
+            return Json(new { success = true, message = "Cover Type deleted successfully!" });
         }
+        #endregion
     }
 }
