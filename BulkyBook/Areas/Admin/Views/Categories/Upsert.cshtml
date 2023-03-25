@@ -9,17 +9,16 @@
                     <h2 class="text-primary">@(Model.Id != 0 ? "Edit Category" : "Create Category")</h2>
                     <hr />
                 </div>
-                <div class="col-6">
+                <div class="mb-3 col-6">
                     <label asp-for="Name"></label>
                     <input asp-for="Name" class="form-control" />
                     <span asp-validation-for="Name" class="text-danger"></span>
                 </div>
-                <div class="col-6">
+                <div class="mb-3 col-6">
                     <label asp-for="DisplayOrder"></label>
                     <input asp-for="DisplayOrder" class="form-control" />
                     <span asp-validation-for="DisplayOrder" class="text-danger"></span>
                 </div>
-                <br />
                 <div class="col-12">
                     @if (Model.Id != 0)
                     {
