@@ -32,29 +32,4 @@
 @section Scripts
 {
     <script src="~/js/category.js"></script>
-    @*<script>
-        $(document).on('click', '.js-delete', function () {
-            var button = $(this);
-
-            bootbox.confirm({
-                title: 'Delete Category?',
-                message: 'Are you sure you want to delete this category?',
-                buttons: {
-                    cancel: {
-                        label: '<i class="bi bi-x-square"></i>&nbsp; No',
-                        className: 'btn-success'
-                    },
-                    confirm: {
-                        label: '<i class="bi bi-check-square"></i>&nbsp; Yes',
-                        className: 'btn-danger'
-                    }
-                },
-                callback: function (result) {
-                    if (result) {
-                        window.location.assign("/Admin/Categories/Delete/" + button.attr("data-category-id"));
-                    }
-                }
-            });
-        })
-    </script>*@
 }
