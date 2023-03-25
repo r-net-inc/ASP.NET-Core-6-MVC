@@ -1,11 +1,11 @@
-﻿let dataTable;
+﻿let table;
 
 $(document).ready(function () {
-    loadDataTable()
+    loadTable()
 });
 
-function loadDataTable() {
-    dataTable = $('#categories').DataTable({
+function loadTable() {
+    table = $('#categories').DataTable({
         ajax: {
             url: '/Admin/Categories/GetAll'
         },
@@ -49,7 +49,7 @@ $(document).on('click', '.js-delete', function () {
                 type: 'DELETE',
                 success: function (data) {
                     if (data.success) {
-                        dataTable.ajax.reload();
+                        table.ajax.reload();
                         toastr.success(data.message);
                     }
                     else {

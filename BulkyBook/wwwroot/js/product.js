@@ -1,11 +1,11 @@
-﻿let dataTable;
+﻿let table;
 
 $(document).ready(function () {
-    loadDataTable()
+    loadTable()
 });
 
-function loadDataTable() {
-    dataTable = $('#products').DataTable({
+function loadTable() {
+    table = $('#products').DataTable({
         ajax: {
             url: '/Admin/Products/GetAll'
         },
@@ -45,7 +45,7 @@ function loadDataTable() {
 //                type: 'DELETE',
 //                success: function (data) {
 //                    if (data.success) {
-//                        dataTable.ajax.reload();
+//                        table.ajax.reload();
 //                        toastr.success(data.message);
 //                    }
 //                    else {
@@ -73,7 +73,7 @@ $(document).on('click', '.js-delete', function () {
                 type: 'DELETE',
                 success: function (data) {
                     if (data.success) {
-                        dataTable.ajax.reload();
+                        table.ajax.reload();
                         toastr.success(data.message);
                     }
                     else {
