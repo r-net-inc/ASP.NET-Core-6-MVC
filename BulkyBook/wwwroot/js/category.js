@@ -12,7 +12,11 @@ function loadDataTable() {
         columns: [
             { data: 'name', width: '25%' },
             { data: 'displayOrder', width: '25%' },
-            { createdDateTime: 'createdDateTime', width: '25%' },
+            {
+                data: 'createdDateTime',
+                render: DataTable.render.datetime(),
+                width: '25%'
+            },
             {
                 data: 'id',
                 render: function (data) {
