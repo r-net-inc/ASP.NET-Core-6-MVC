@@ -13,9 +13,9 @@ namespace BulkyBook.Models.ViewModels
         public Product Product { get; set; }
 
         [ValidateNever]
-        public IEnumerable<SelectListItem> CategoriesList { get; set; }
+        public IEnumerable<SelectListItem> Categories { get; set; }
 
         [ValidateNever]
-        public IEnumerable<SelectListItem> CoverTypesList { get; set; }
+        public IEnumerable<SelectListItem> CoverTypes { get; set; }
     }
 }

@@ -22,7 +22,7 @@ function loadDataTable() {
                 render: function (data) {
                     return `
                         <div class="btn-group" role="group">
-                            <a href="/Admin/Categories/Edit/${data}" class="btn btn-primary mx-2"><i class="bi bi-pencil-square"></i>Edit</a>
+                            <a href="/Admin/Categories/Upsert/${data}" class="btn btn-primary mx-2"><i class="bi bi-pencil-square"></i>Edit</a>
                             <a class="btn btn-danger mx-2 js-delete" data-category-id="${data}"><i class="bi bi-trash3"></i>Delete</a>
                         </div>
                     `

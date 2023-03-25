@@ -1,0 +1,75 @@
+﻿@model Category
+
+<form method="post" asp-action="Upsert">
+    <input asp-for="Id" hidden />
+    <div class="row">
+        <div class="col-12">
+            <div class="border p-3 mt-4 row">
+                <div class="col-12 pb-2">
+                    <h2 class="text-primary">@(Model.Id != 0 ? "Edit Category" : "Create Category")</h2>
+                    <hr />
+                </div>
+                <div class="mb-6">
+                    <label asp-for="Name"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="mb-6">
+                    <label asp-for="DisplayOrder"></label>
+                    <textarea asp-for="DisplayOrder" class="form-control"></textarea>
+                    <span asp-validation-for="DisplayOrder" class="text-danger"></span>
+                </div>
+                <div class="col-12">
+                    @if (Model.Id != 0)
+                    {
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary" style="width:150px">Update</button>
+                            <a asp-area="Admin" asp-controller="Categories" asp-action="Index" class="btn btn-secondary" style="width:150px">Cancel</a>
+                            <a class="btn btn-danger js-delete" data-category-id="@Model.Id" style="width:150px">Delete</a>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary" style="width:150px">Save</button>
+                            <a asp-area="Admin" asp-controller="Categories" asp-action="Index" class="btn btn-secondary" style="width:150px">Cancel</a>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    @Html.AntiForgeryToken()
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>        
+        $(document).on('click', '.js-delete', function () {
+            var button = $(this);
+
+            swal({
+                title: "Are you sure?",
+                text: "You will not be able to recover this product!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            }).then((result) => {
+                if (result) {
+                    $.ajax({
+                        url: '/Admin/Categories/Delete/' + button.attr("data-category-id"),
+                        type: 'DELETE',
+                        success: function (data) {
+                            if (data.success) {
+                                window.location.assign("/Admin/Categories/");
+                            }
+                            else {
+                                toastr.error(data.message);
+                            }
+                        }
+                    })
+                }
+            })
+        });
+    </script>
+}

@@ -51,12 +51,12 @@ namespace BulkyBook.Areas.Admin.Controllers
             var productVM = new ProductViewModel()
             {
                 Product = new(),
-                CategoriesList = _unitOfWork.Category.GetAll().Select(c => new SelectListItem
+                Categories = _unitOfWork.Category.GetAll().Select(c => new SelectListItem
                 {
                     Text = c.Name,
                     Value = c.Id.ToString()
                 }),
-                CoverTypesList = _unitOfWork.CoverType.GetAll().Select(c => new SelectListItem
+                CoverTypes = _unitOfWork.CoverType.GetAll().Select(c => new SelectListItem
                 {
                     Text = c.Name,
                     Value = c.Id.ToString()
