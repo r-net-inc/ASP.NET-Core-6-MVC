@@ -124,5 +124,14 @@ namespace BulkyBook.Areas.Admin.Controllers
 
             return RedirectToAction("Index");
         }
+
+        #region API CALLS
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            var categories = _unitOfWork.Category.GetAll();
+            return Json(new { data = categories });
+        }
+        #endregion
     }
 }
