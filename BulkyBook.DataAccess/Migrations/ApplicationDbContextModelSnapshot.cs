@@ -45,38 +45,6 @@ namespace BulkyBook.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("BulkyBook.Models.Company", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("City")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PostalCode")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Province")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("StreeAddress")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Companies");
-                });
-
             modelBuilder.Entity("BulkyBook.Models.CoverType", b =>
                 {
                     b.Property<int>("Id")
