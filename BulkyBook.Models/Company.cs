@@ -14,15 +14,18 @@ namespace BulkyBook.Models
         [Required]
         public string Name { get; set; }
 
-        public string? StreeAddress { get; set; }
+        [Display(Name = "Street Address")]
+        public string? StreetAddress { get; set; }
 
         public string? City { get; set; }
 
         public string? Province { get; set; }
 
+        [Display(Name = "Postal Code")]
         public string? PostalCode { get; set; }
 
         [Phone]
+        [Display(Name = "Phone Number")]
         public string? PhoneNumber { get; set; }
     }
 }
