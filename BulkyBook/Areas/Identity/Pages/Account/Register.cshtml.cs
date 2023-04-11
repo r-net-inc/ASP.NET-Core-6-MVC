@@ -120,6 +120,11 @@ namespace BulkyBook.Areas.Identity.Pages.Account
 
             [Display(Name = "Phone Number")]
             public string? PhoneNumber { get; set; }
+
+            public string? Role { get; set; }
+
+            [ValidateNever]
+            public IEnumerable<SelectListItem> RoleList { get; set; }
         }
 
 
@@ -134,6 +139,14 @@ namespace BulkyBook.Areas.Identity.Pages.Account
             }            
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+            Input = new InputModel()
+            {
+                RoleList = _roleManager.Roles.Select(x => x.Name).Select(i => new SelectListItem 
+                {
+                    Text = i,
+                    Value = i
+                })
+            };
         }
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
