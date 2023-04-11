@@ -179,6 +179,10 @@ namespace BulkyBook.Areas.Identity.Pages.Account
                 user.City = Input.City;
                 user.Province = Input.Province;
                 user.PostalCode = Input.PostalCode;
+                if (Input.Role == SD.Role_User_Company)
+                {
+                    user.CompanyId = Input.CompanyId;
+                }
 
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
