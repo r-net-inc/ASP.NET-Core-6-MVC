@@ -14,6 +14,8 @@ namespace BulkyBook.Areas.Customer.Controllers
 
         public ShoppingCartViewModel ShoppingCartViewModel { get; set; }
 
+        public int CartTotal { get; set; }
+
         public ShoppingCartsController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
@@ -29,7 +31,31 @@ namespace BulkyBook.Areas.Customer.Controllers
                 CartList = _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == claim.Value, includeProperties: "Product")
             };
 
+            foreach (var cart in ShoppingCartViewModel.CartList)
+            {
+                cart.Price = GetPriceBasedOnQuantity(cart.Count, cart.Product.Price, cart.Product.Price50, cart.Product.Price100);
+            }
+
             return View(ShoppingCartViewModel);
+        }
+
+        private double GetPriceBasedOnQuantity(int quantity, double price, double price50, double price100)
+        {
+            if (quantity <= 50)
+            {
+                return price;
+            }
+            else
+            {
+                if (quantity <= 100)
+                {
+                    return price50;
+                }
+                else
+                {
+                    return price100;
+                }
+            }
         }
     }
 }
