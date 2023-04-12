@@ -20,7 +20,7 @@ namespace BulkyBook.Areas.Customer.Controllers
         }
 
         public IActionResult Index()
-        {
+        { 
             var claimsIdentity = (ClaimsIdentity)User.Identity;
             var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
 
