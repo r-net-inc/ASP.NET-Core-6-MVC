@@ -40,7 +40,28 @@ namespace BulkyBook.Areas.Customer.Controllers
             return View(ShoppingCartViewModel);
         }
 
-        public IActionResult Plus(int cartId) 
+		public IActionResult Summary()
+		{
+			//var claimsIdentity = (ClaimsIdentity)User.Identity;
+			//var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+
+			//ShoppingCartViewModel = new ShoppingCartViewModel()
+			//{
+			//	CartList = _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == claim.Value, includeProperties: "Product")
+			//};
+
+			//foreach (var cart in ShoppingCartViewModel.CartList)
+			//{
+			//	cart.Price = GetPriceBasedOnQuantity(cart.Count, cart.Product.Price, cart.Product.Price50, cart.Product.Price100);
+			//	ShoppingCartViewModel.CartTotal += (cart.Price * cart.Count);
+			//}
+
+			//return View(ShoppingCartViewModel);
+
+            return View();
+		}
+
+		public IActionResult Plus(int cartId) 
         {
             var cart = _unitOfWork.ShoppingCart.GetFirstOrDefault(x => x.Id == cartId);
             _unitOfWork.ShoppingCart.IncrementCount(cart, 1);
