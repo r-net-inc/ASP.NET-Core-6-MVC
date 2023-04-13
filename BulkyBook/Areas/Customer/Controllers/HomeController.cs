@@ -8,7 +8,7 @@ using System.Security.Claims;
 
 namespace BulkyBook.Areas.Customer.Controllers
 {
-    [Area("Customer")]
+    [Area(nameof(Customer))]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

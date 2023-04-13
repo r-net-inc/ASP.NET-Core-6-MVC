@@ -15,7 +15,7 @@ namespace BulkyBook.Models
 
 		public string ApplicationUserId { get; set; }
 
-		[ForeignKey(nameof(OrderHeader.ApplicationUserId))]
+		[ForeignKey(nameof(ApplicationUserId))]
 		[ValidateNever]
         public ApplicationUser ApplicationUser { get; set; }
 
@@ -37,10 +37,12 @@ namespace BulkyBook.Models
 		
 		[Required]
         [Phone]
+		[Display(Name = "Phone Number")]
         public string PhoneNumber { get; set; }
 
         [Required]
-        public string StreetAddress { get; set; }
+		[Display(Name = "Street Address")]
+		public string StreetAddress { get; set; }
 
 		[Required]
 		public string City { get; set; }
@@ -49,6 +51,7 @@ namespace BulkyBook.Models
 		public string Province { get; set; }
 
 		[Required]
+		[Display(Name = "Postal Code")]
 		public string PostalCode { get; set; }
 	}
 }

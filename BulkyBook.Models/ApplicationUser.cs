@@ -25,7 +25,7 @@ namespace BulkyBook.Models
 
         public int? CompanyId { get; set; }
 
-        [ForeignKey("CompanyId")]
+        [ForeignKey(nameof(CompanyId))]
         [ValidateNever]
         public Company Company { get; set; }
     }

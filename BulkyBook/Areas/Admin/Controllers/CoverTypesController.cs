@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace BulkyBook.Areas.Admin.Controllers
 {
-    [Area("Admin")]
+    [Area(nameof(Admin))]
     public class CoverTypesController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -63,7 +63,7 @@ namespace BulkyBook.Areas.Admin.Controllers
                 }
 
                 _unitOfWork.Save();
-                return RedirectToAction("Index");
+                return RedirectToAction(nameof(Index));
             }
 
             return View(coverType);

@@ -52,7 +52,7 @@ namespace BulkyBook.Models
         [Display(Name = "Category")]
         public int CategoryId { get; set; }
 
-        [ForeignKey("CategoryId")]
+        [ForeignKey(nameof(CategoryId))]
         [ValidateNever]
         public Category Category { get; set; }
 

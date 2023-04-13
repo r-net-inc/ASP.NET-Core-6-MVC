@@ -15,7 +15,7 @@ namespace BulkyBook.Models
 
         public int ProductId { get; set; }
 
-        [ForeignKey(nameof(ShoppingCart.ProductId))]
+        [ForeignKey(nameof(ProductId))]
         [ValidateNever]
         public Product Product { get; set; }
 
@@ -24,7 +24,7 @@ namespace BulkyBook.Models
 
         public string ApplicationUserId { get; set; }
 
-        [ForeignKey(nameof(ShoppingCart.ApplicationUserId))]
+        [ForeignKey(nameof(ApplicationUserId))]
         [ValidateNever]
         public ApplicationUser ApplicationUser { get; set; }
 

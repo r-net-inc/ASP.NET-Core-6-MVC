@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 
 namespace BulkyBook.Areas.Admin.Controllers
 {
-    [Area("Admin")]
+    [Area(nameof(Admin))]
     public class CompaniesController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -62,7 +62,7 @@ namespace BulkyBook.Areas.Admin.Controllers
                 }
 
                 _unitOfWork.Save();
-                return RedirectToAction("Index");
+                return RedirectToAction(nameof(Index));
             }
 
             return View(company);

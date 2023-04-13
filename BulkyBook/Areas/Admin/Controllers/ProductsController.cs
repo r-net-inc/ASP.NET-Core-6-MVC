@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace BulkyBook.Areas.Admin.Controllers
 {
-    [Area("Admin")]
+    [Area(nameof(Admin))]
     public class ProductsController : Controller
     {
         //private readonly ApplicationDbContext _db;
@@ -126,7 +126,7 @@ namespace BulkyBook.Areas.Admin.Controllers
                 //_unitOfWork.Product.Add(productVM.Product);
                 //_db.SaveChanges();
                 _unitOfWork.Save();
-                return RedirectToAction("Index");
+                return RedirectToAction(nameof(Index));
             }
 
             return View(productVM);
