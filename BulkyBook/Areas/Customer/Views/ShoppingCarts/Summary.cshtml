@@ -1,4 +1,6 @@
 ﻿@model BulkyBook.Models.ViewModels.ShoppingCartViewModel
+@using Microsoft.Extensions.Options
+@inject IOptions<BulkyBook.Utilities.StripeSettings> Stripe
 
 <form method="post">
 	<br />
@@ -15,6 +17,7 @@
 					</div>
 				</div>
 			</div>
+			
 			<div class="card-body">
 				<div class="container rounded p-2">
 					<div class="row">

@@ -34,5 +34,13 @@ namespace BulkyBook.DataAccess.Repository
                 }
             }
 		}
+
+		public void UpdateStripePaymentId(int id, string sessionId, string paymentIntentId)
+		{
+			var headerFromDb = _db.OrderHeaders.FirstOrDefault(h => h.Id == id);
+			
+            headerFromDb.SessionId = sessionId;
+            headerFromDb.PaymentIntentId = paymentIntentId;
+		}
 	}
 }
