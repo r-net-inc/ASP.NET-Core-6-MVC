@@ -17,9 +17,7 @@ function loadTable() {
             { data: 'orderStatus', "width": '15%' },
             {
                 data: 'orderTotal',
-                render: function (data, type, row) {
-                    return '$' + data;
-                },
+                render: DataTable.render.number(null, null, 2, '$'),
                 "width": '10%'
             },
             {

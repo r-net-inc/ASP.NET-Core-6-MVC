@@ -10,21 +10,21 @@ function loadTable() {
             url: '/Admin/Companies/GetAll'
         },
         columns: [
-            { data: 'name', width: '20%' },
-            { data: 'city', width: '20%' },
-            { data: 'province', width: '20%' },
-            { data: 'phoneNumber', width: '20%' },
+            { data: 'name', "width": '35%' },
+            { data: 'city', "width": '15%' },
+            { data: 'province', "width": '15%' },
+            { data: 'phoneNumber', "width": '15%' },
             {
                 data: 'id',
                 render: function (data) {
                     return `
                         <div class="btn-group" role="group">
-                            <a href="/Admin/Companies/Upsert/${data}" class="btn btn-primary mx-2"><i class="bi bi-pencil-square"></i>Edit</a>
-                            <a class="btn btn-danger mx-2 js-delete" data-company-id="${data}"><i class="bi bi-trash3"></i>Delete</a>
+                            <a href="/Admin/Companies/Upsert/${data}" class="btn btn-primary btn-sm mx-2"><i class="bi bi-pencil-square"></i>Edit</a>
+                            <a class="btn btn-danger btn-sm mx-2 js-delete" data-company-id="${data}"><i class="bi bi-trash3"></i>Delete</a>
                         </div>
                     `
                 },
-                width: '20%'
+                "width": '20%'
             }
         ]
     });
