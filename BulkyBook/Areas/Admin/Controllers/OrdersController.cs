@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BulkyBook.Areas.Admin.Controllers
 {
+	[Area(nameof(Admin))]
 	public class OrdersController : Controller
 	{
 		private readonly IUnitOfWork _unitOfWork;

@@ -5,23 +5,23 @@ $(document).ready(function () {
 });
 
 function loadTable() {
-    table = $('#products').DataTable({
+    table = $('#orders').DataTable({
         ajax: {
-            url: '/Admin/Products/GetAll'
+            url: '/Admin/Orders/GetAll'
         },
         columns: [
-            { data: 'title', "width": '15%' },
-            { data: 'author', "width": '15%' },
-            { data: 'category.name', "width": '15%' },
-            { data: 'isbn', "width": '15%' },
-            { data: 'listPrice', "width": '5%' },
+            { data: 'id', "width": '5%' },
+            { data: 'name', "width": '25%' },
+            { data: 'phoneNumber', "width": '15%' },
+            { data: 'applicationUser.email', "width": '15%' },
+            { data: 'orderStatus', "width": '15%' },
+            { data: 'orderTotal', "width": '10%' },
             {
                 data: 'id',
                 render: function (data) {
                     return `
                         <div class="btn-group" role="group">
-                            <a href="/Admin/Products/Upsert/${data}" class="btn btn-primary mx-2"><i class="bi bi-pencil-square"></i>Edit</a>
-                            <a class="btn btn-danger mx-2 js-delete" data-product-id="${data}"><i class="bi bi-trash3"></i>Delete</a>
+                            <a href="/Admin/Orders/Details/${data}" class="btn btn-primary mx-2"><i class="bi bi-pencil-square"></i>Details</a>
                         </div>
                     `
                 },
