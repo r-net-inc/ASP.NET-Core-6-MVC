@@ -5,13 +5,13 @@
 
 <partial name="_Notifications" />
 
-<div class="container p-3">
-    <div class="row pt-4">
-        <div class="col-6">
+<div class="p-3">
+    <div class="d-flex justify-content-between pt-4">
+        <div class="p-2">
             <h2 class="text-primary">@ViewData["Title"]</h2>
         </div>
-        <div class="col-6 text-end">
-            <a asp-controller="Products" asp-action="Upsert" class="btn btn-primary">
+        <div class="p-2">
+            <a asp-controller="Products" asp-action="Upsert" class="btn btn-primary btn-sm">
                 <i class="bi bi-plus-circle"></i> &nbsp; Create New Order
             </a>
         </div>
@@ -20,19 +20,19 @@
     <table id="orders" class="display" style="width:100%">
         <thead>
             <tr>
-                <th class="col-2">ID</th>
-                <th class="col-2">Name</th>
-                <th class="col-2">Phone</th>
-                <th class="col-2">Email</th>
-                <th class="col-1">Status</th>
-                <th class="col-1">Total</th>
-                <th class="col-3"></th>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th>Status</th>
+                <th>Total</th>
+                <th></th>
             </tr>
         </thead>
     </table>
 </div>
 
 @section Scripts
-    {
+{
     <script src="~/js/orders.js"></script>
 }

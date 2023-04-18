@@ -5,13 +5,13 @@
 
 <partial name="_Notifications" />
 
-<div class="container p-3">
-    <div class="row pt-4">
-        <div class="col-6">
+<div class="p-3">
+    <div class="d-flex justify-content-between pt-4">
+        <div class="p-2">
             <h2 class="text-primary">@ViewData["Title"]</h2>
         </div>
-        <div class="col-6 text-end">
-            <a asp-controller="Categories" asp-action="Upsert" class="btn btn-primary">
+        <div class="p-2">
+            <a asp-controller="Categories" asp-action="Upsert" class="btn btn-primary btn-sm">
                 <i class="bi bi-plus-circle"></i> &nbsp; Create New Category
             </a>
         </div>
@@ -31,5 +31,5 @@
 
 @section Scripts
 {
-    <script src="~/js/category.js"></script>
+    <script src="~/js/categories.js"></script>
 }

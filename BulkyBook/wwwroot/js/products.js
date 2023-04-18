@@ -10,22 +10,28 @@ function loadTable() {
             url: '/Admin/Products/GetAll'
         },
         columns: [
-            { data: 'title', "width": '15%' },
+            { data: 'title', "width": '30%' },
             { data: 'author', "width": '15%' },
             { data: 'category.name', "width": '15%' },
             { data: 'isbn', "width": '15%' },
-            { data: 'listPrice', "width": '5%' },
+            {
+                data: 'listPrice',
+                render: function (data, type, row) {
+                    return '$' + data;
+                },
+                "width": '5%'
+            },
             {
                 data: 'id',
                 render: function (data) {
                     return `
                         <div class="btn-group" role="group">
-                            <a href="/Admin/Products/Upsert/${data}" class="btn btn-primary mx-2"><i class="bi bi-pencil-square"></i>Edit</a>
-                            <a class="btn btn-danger mx-2 js-delete" data-product-id="${data}"><i class="bi bi-trash3"></i>Delete</a>
+                            <a href="/Admin/Products/Upsert/${data}" class="btn btn-primary btn-sm mx-2"><i class="bi bi-pencil-square"></i>Edit</a>
+                            <a class="btn btn-danger btn-sm mx-2 js-delete" data-product-id="${data}"><i class="bi bi-trash3"></i>Delete</a>
                         </div>
                     `
                 },
-                width: '15%'
+                "width": '20%'
             }
         ]
     });
