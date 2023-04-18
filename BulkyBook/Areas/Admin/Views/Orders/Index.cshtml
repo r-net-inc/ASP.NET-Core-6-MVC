@@ -11,9 +11,20 @@
             <h2 class="text-primary">@ViewData["Title"]</h2>
         </div>
         <div class="p-2">
-            <a asp-controller="Products" asp-action="Upsert" class="btn btn-primary btn-sm">
-                <i class="bi bi-plus-circle"></i> &nbsp; Create New Order
-            </a>
+            <ul class="list-group list-group-horizontal-sm"> 
+                <a style="text-decoration:none;" asp-controller="Orders" asp-action="Index" asp-route-status="inprocess">
+                    <li class="list-group-item">In Process</li>
+                </a>
+                <a style="text-decoration:none;" asp-controller="Orders" asp-action="Index" asp-route-status="pending">
+                    <li class="list-group-item">Pending</li>
+                </a>
+                <a style="text-decoration:none;" asp-controller="Orders" asp-action="Index" asp-route-status="completed">
+                    <li class="list-group-item">Completed</li>
+                </a>
+                <a style="text-decoration:none;" asp-controller="Orders" asp-action="Index" asp-route-status="all">
+                    <li class="list-group-item">All</li>
+                </a>
+            </ul>
         </div>
     </div>
     <br /><br />
