@@ -1,11 +1,9 @@
-﻿let table;
-
-$(document).ready(function () {
+﻿$(document).ready(function () {
     loadTable()
 });
 
 function loadTable() {
-    table = $('#companies').DataTable({
+    let table = $('#companies').DataTable({
         ajax: {
             url: '/Admin/Companies/GetAll'
         },

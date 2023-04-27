@@ -1,13 +1,32 @@
-﻿let table;
-
-$(document).ready(function () {
-    loadTable()
+﻿$(document).ready(function () {
+    var url = window.location.search;
+    if (url.includes("processing")) {
+        loadTable("processing");
+    }
+    else {
+        if (url.includes("completed")) {
+            loadTable("completed");
+        }
+        else {
+            if (url.includes("pending")) {
+                loadTable("pending");
+            }
+            else {
+                if (url.includes("approved")) {
+                    loadTable("approved");
+                }
+                else {
+                    loadTable("all");
+                }
+            }
+        }
+    }
 });
 
-function loadTable() {
-    table = $('#orders').DataTable({
+function loadTable(status) {
+    var table = $('#orders').DataTable({ 
         ajax: {
-            url: '/Admin/Orders/GetAll'
+            url: "/Admin/Orders/GetAll?status=" + status
         },
         columns: [
             { data: 'id', "width": '5%' },
@@ -25,7 +44,7 @@ function loadTable() {
                 render: function (data) {
                     return `
                         <div class="btn-group" role="group">
-                            <a href="/Admin/Orders/Details/${data}" class="btn btn-primary btn-sm mx-2"><i class="bi bi-pencil-square"></i>Details</a>
+                            <a href="/Admin/Orders/Details/${data}" class="btn btn-primary btn-sm mx-2"><i class="bi bi-pencil-square">Details</i></a>
                         </div>
                     `
                 },

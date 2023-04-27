@@ -2,6 +2,7 @@
 using BulkyBook.DataAccess.Repository.IRepository;
 using BulkyBook.Models;
 using BulkyBook.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Linq;
@@ -9,6 +10,7 @@ using System.Linq;
 namespace BulkyBook.Areas.Admin.Controllers
 {
     [Area(nameof(Admin))]
+    [Authorize]
     public class ProductsController : Controller
     {
         //private readonly ApplicationDbContext _db;

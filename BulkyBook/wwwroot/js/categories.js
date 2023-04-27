@@ -1,11 +1,9 @@
-﻿let table;
-
-$(document).ready(function () {
+﻿$(document).ready(function () {
     loadTable()
 });
 
 function loadTable() {
-    table = $('#categories').DataTable({
+    let table = $('#categories').DataTable({
         ajax: {
             url: '/Admin/Categories/GetAll'
         },

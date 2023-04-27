@@ -1,4 +1,5 @@
-﻿<header>
+﻿@using BulkyBook.Utilities;
+<header>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
             <a class="navbar-brand" asp-area="Customer" asp-controller="Home" asp-action="Index">BulkyBook</a>
@@ -7,16 +8,22 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarColor01">
                 <ul class="navbar-nav me-auto">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Content Management</a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" asp-area="Admin" asp-controller="Categories" asp-action="Index">Categories</a>
-                            <a class="dropdown-item" asp-area="Admin" asp-controller="CoverTypes" asp-action="Index">Cover Types</a>
-                            <a class="dropdown-item" asp-area="Admin" asp-controller="Products" asp-action="Index">Products</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" asp-area="Admin" asp-controller="Companies" asp-action="Index">Companies</a>
-                        </div>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="Customer" asp-controller="Home" asp-action="Index">Gallery</a>
                     </li>
+                    @if (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Employee))
+                    {
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Content Management</a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" asp-area="Admin" asp-controller="Categories" asp-action="Index">Categories</a>
+                                <a class="dropdown-item" asp-area="Admin" asp-controller="CoverTypes" asp-action="Index">Cover Types</a>
+                                <a class="dropdown-item" asp-area="Admin" asp-controller="Products" asp-action="Index">Products</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" asp-area="Admin" asp-controller="Companies" asp-action="Index">Companies</a>
+                            </div>
+                        </li>
+                    }
                     <li class="nav-item">
                         <a class="nav-link" asp-area="Admin" asp-controller="Orders" asp-action="Index">Manage Orders</a>
                     </li>

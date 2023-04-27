@@ -90,12 +90,12 @@ namespace BulkyBook.Areas.Customer.Controllers
 			if (applicationUser.CompanyId.GetValueOrDefault() == 0)
 			{
 				ShoppingCartViewModel.OrderHeader.PaymentStatus = SD.PaymentStatusPending;
-				ShoppingCartViewModel.OrderHeader.OrderStatus = SD.StatusPending;
+				ShoppingCartViewModel.OrderHeader.OrderStatus = SD.OrderStatusPending;
             }
             else
             {
 				ShoppingCartViewModel.OrderHeader.PaymentStatus = SD.PaymentStatusDelayedPayment;
-				ShoppingCartViewModel.OrderHeader.OrderStatus = SD.StatusApproved;
+				ShoppingCartViewModel.OrderHeader.OrderStatus = SD.OrderStatusApproved;
 			}
 
 			foreach (var cart in ShoppingCartViewModel.CartList)
@@ -172,7 +172,7 @@ namespace BulkyBook.Areas.Customer.Controllers
 				// Check Stripe Status
 				if (session.PaymentStatus.ToLower() == "paid")
 				{
-					_unitOfWork.OrderHeader.UpdateStatus(id, SD.StatusApproved, SD.PaymentStatusApproved);
+					_unitOfWork.OrderHeader.UpdateStatus(id, SD.OrderStatusApproved, SD.PaymentStatusApproved);
 					_unitOfWork.Save();
 				}
 			}            
