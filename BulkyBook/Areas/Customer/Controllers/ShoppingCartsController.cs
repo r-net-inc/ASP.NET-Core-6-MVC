@@ -173,6 +173,7 @@ namespace BulkyBook.Areas.Customer.Controllers
 				if (session.PaymentStatus.ToLower() == "paid")
 				{
 					_unitOfWork.OrderHeader.UpdateStatus(id, SD.OrderStatusApproved, SD.PaymentStatusApproved);
+					_unitOfWork.OrderHeader.UpdateStripePaymentId(id, session.Id, session.PaymentIntentId);
 					_unitOfWork.Save();
 				}
 			}            

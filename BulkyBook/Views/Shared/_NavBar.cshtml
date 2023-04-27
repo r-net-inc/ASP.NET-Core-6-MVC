@@ -8,9 +8,6 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarColor01">
                 <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" asp-area="Customer" asp-controller="Home" asp-action="Index">Gallery</a>
-                    </li>
                     @if (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Employee))
                     {
                         <li class="nav-item dropdown">
