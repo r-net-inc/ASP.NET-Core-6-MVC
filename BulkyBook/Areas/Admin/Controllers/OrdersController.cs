@@ -9,24 +9,24 @@ using System.Security.Claims;
 
 namespace BulkyBook.Areas.Admin.Controllers
 {
-	[Area(nameof(Admin))]
+    [Area(nameof(Admin))]
     [Authorize]
-	public class OrdersController : Controller
-	{
-		private readonly IUnitOfWork _unitOfWork;
+    public class OrdersController : Controller
+    {
+        private readonly IUnitOfWork _unitOfWork;
 
         [BindProperty]
         public OrderViewModel OrderViewModel { get; set; }
 
         public OrdersController(IUnitOfWork unitOfWork)
         {
-			_unitOfWork = unitOfWork;
+            _unitOfWork = unitOfWork;
         }
 
         public IActionResult Index()
-		{
-			return View();
-		}
+        {
+            return View();
+        }
 
         public IActionResult Details(int id)
         {
@@ -38,10 +38,37 @@ namespace BulkyBook.Areas.Admin.Controllers
             return View(OrderViewModel);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult UpdateOrderDetails()
+        {
+            var orderHeaderFromDb = _unitOfWork.OrderHeader.GetFirstOrDefault(x => x.Id == OrderViewModel.OrderHeader.Id, tracked:false);
+            orderHeaderFromDb.Name = OrderViewModel.OrderHeader.Name;
+            orderHeaderFromDb.PhoneNumber = OrderViewModel.OrderHeader.PhoneNumber;
+            orderHeaderFromDb.StreetAddress = OrderViewModel.OrderHeader.StreetAddress;
+            orderHeaderFromDb.City = OrderViewModel.OrderHeader.City;
+            orderHeaderFromDb.Province = OrderViewModel.OrderHeader.Province;
+            orderHeaderFromDb.PostalCode = OrderViewModel.OrderHeader.PostalCode;
+
+            if (OrderViewModel.OrderHeader.Carrier != null)
+            {
+                orderHeaderFromDb.Carrier = OrderViewModel.OrderHeader.Carrier;
+            }
+            if (OrderViewModel.OrderHeader.TrackingNumber != null)
+            {
+                orderHeaderFromDb.TrackingNumber = OrderViewModel.OrderHeader.TrackingNumber;
+            }
+
+            _unitOfWork.OrderHeader.Update(orderHeaderFromDb);
+            _unitOfWork.Save();
+            TempData["Success"] = "Order details updated successully.";
+            return RedirectToAction(nameof(Details), new { id = orderHeaderFromDb.Id });
+        }
+
         #region API CALLS
         [HttpGet]
-		public IActionResult GetAll(string status)
-		{
+        public IActionResult GetAll(string status)
+        {
             IEnumerable<OrderHeader> orderHeaders;
 
             if (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Employee))
@@ -74,7 +101,7 @@ namespace BulkyBook.Areas.Admin.Controllers
             }
 
             return Json(new { data = orderHeaders });
-		}
-		#endregion
-	}
+        }
+        #endregion
+    }
 }

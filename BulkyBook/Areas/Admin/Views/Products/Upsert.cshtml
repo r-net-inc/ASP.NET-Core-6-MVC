@@ -96,14 +96,13 @@
             </div>
         }
     </div>
-
     @Html.AntiForgeryToken()
 </form>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
     <script>
-        function ValidateInput () {
+        function ValidateInput() {
             if (document.getElementById("uploadBox").value == "") {
                 swal({
                     title: "Oops...",
@@ -114,7 +113,7 @@
             }
             return true;
         }
-        
+
         $(document).on('click', '.js-delete', function () {
             var button = $(this);
 
