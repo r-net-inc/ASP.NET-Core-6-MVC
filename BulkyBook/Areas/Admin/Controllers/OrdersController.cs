@@ -86,7 +86,6 @@ namespace BulkyBook.Areas.Admin.Controllers
             orderHeaderFromDb.OrderStatus = SD.OrderStatusShipped;
 
             _unitOfWork.OrderHeader.Update(orderHeaderFromDb);
-            _unitOfWork.OrderHeader.UpdateStatus(OrderViewModel.OrderHeader.Id, SD.OrderStatusProcessing);
             _unitOfWork.Save();
             TempData["Success"] = "Order shipped successully.";
             return RedirectToAction(nameof(Details), new { id = OrderViewModel.OrderHeader.Id });

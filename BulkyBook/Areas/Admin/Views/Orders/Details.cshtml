@@ -249,7 +249,7 @@
                             {
                                 if (Model.OrderHeader.OrderStatus == SD.OrderStatusApproved)
                                 {
-                                    <input asp-action="StartProcessing" type="submit" class="btn btn-primary form-control my-1" value="Process" />
+                                    <input asp-action="StartProcessing" type="submit" class="btn btn-primary form-control my-1" value="Process Order" />
                                 }
                                 if (Model.OrderHeader.OrderStatus == SD.OrderStatusProcessing)
                                 {
@@ -280,18 +280,18 @@
     <partial name="_ValidationScriptsPartial" />
     <script>
         function ValidateInput() {
-            if (document.getElementById("trackingNumber").value == "") {
-                swal({
-                    title: "Oops...",
-                    text: "Please enter a tracking number!",
-                    icon: "error",
-                });
-                return false;
-            } 
             if (document.getElementById("carrier").value == "") {
                 swal({
                     title: "Oops...",
                     text: "Please enter a Carrier!",
+                    icon: "error",
+                });
+                return false;
+            }
+            if (document.getElementById("trackingNumber").value == "") {
+                swal({
+                    title: "Oops...",
+                    text: "Please enter a tracking number!",
                     icon: "error",
                 });
                 return false;
