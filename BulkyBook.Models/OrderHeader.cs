@@ -46,7 +46,7 @@ namespace BulkyBook.Models
         public string? Carrier { get; set; }
 
 
-        [Display(Name = "Street Address")]
+        [Display(Name = "Payment Due Date")]
         public DateTime PaymentDueDate { get; set; }
 
 
