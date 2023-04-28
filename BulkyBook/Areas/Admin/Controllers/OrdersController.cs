@@ -44,14 +44,13 @@ namespace BulkyBook.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult UpdateOrderDetails()
         {
-            var orderHeaderFromDb = _unitOfWork.OrderHeader.GetFirstOrDefault(x => x.Id == OrderViewModel.OrderHeader.Id, tracked:false);
+            var orderHeaderFromDb = _unitOfWork.OrderHeader.GetFirstOrDefault(x => x.Id == OrderViewModel.OrderHeader.Id, tracked: false);
             orderHeaderFromDb.Name = OrderViewModel.OrderHeader.Name;
             orderHeaderFromDb.PhoneNumber = OrderViewModel.OrderHeader.PhoneNumber;
             orderHeaderFromDb.StreetAddress = OrderViewModel.OrderHeader.StreetAddress;
             orderHeaderFromDb.City = OrderViewModel.OrderHeader.City;
             orderHeaderFromDb.Province = OrderViewModel.OrderHeader.Province;
             orderHeaderFromDb.PostalCode = OrderViewModel.OrderHeader.PostalCode;
-
             if (OrderViewModel.OrderHeader.Carrier != null)
             {
                 orderHeaderFromDb.Carrier = OrderViewModel.OrderHeader.Carrier;
@@ -63,7 +62,7 @@ namespace BulkyBook.Areas.Admin.Controllers
 
             _unitOfWork.OrderHeader.Update(orderHeaderFromDb);
             _unitOfWork.Save();
-            TempData["Success"] = "Order details updated successully.";
+            TempData["success"] = "Order details updated successully.";
             return RedirectToAction(nameof(Details), new { id = orderHeaderFromDb.Id });
         }
 
@@ -74,7 +73,7 @@ namespace BulkyBook.Areas.Admin.Controllers
         {
             _unitOfWork.OrderHeader.UpdateStatus(OrderViewModel.OrderHeader.Id, SD.OrderStatusProcessing);
             _unitOfWork.Save();
-            TempData["Success"] = "Order status updated successully.";
+            TempData["success"] = "Order status updated successully.";
             return RedirectToAction(nameof(Details), new { id = OrderViewModel.OrderHeader.Id });
         }
 
@@ -88,7 +87,6 @@ namespace BulkyBook.Areas.Admin.Controllers
             orderHeaderFromDb.Carrier = OrderViewModel.OrderHeader.Carrier;
             orderHeaderFromDb.ShippingDate = DateTime.Now;
             orderHeaderFromDb.OrderStatus = SD.OrderStatusShipped;
-
             if (orderHeaderFromDb.PaymentStatus == SD.PaymentStatusDelayedPayment)
             {
                 orderHeaderFromDb.PaymentDueDate = DateTime.Now.AddDays(30);
@@ -96,7 +94,7 @@ namespace BulkyBook.Areas.Admin.Controllers
 
             _unitOfWork.OrderHeader.Update(orderHeaderFromDb);
             _unitOfWork.Save();
-            TempData["Success"] = "Order shipped successully.";
+            TempData["success"] = "Order shipped successully.";
             return RedirectToAction(nameof(Details), new { id = OrderViewModel.OrderHeader.Id });
         }
 
@@ -106,26 +104,32 @@ namespace BulkyBook.Areas.Admin.Controllers
         {
             var orderHeaderFromDb = _unitOfWork.OrderHeader.GetFirstOrDefault(x => x.Id == OrderViewModel.OrderHeader.Id, tracked: false);
 
-            if (orderHeaderFromDb.PaymentStatus == SD.PaymentStatusApproved)
+            if (orderHeaderFromDb.OrderStatus != SD.OrderStatusRefunded && orderHeaderFromDb.OrderStatus != SD.OrderStatusCancelled &&
+                orderHeaderFromDb.OrderStatus != SD.OrderStatusShipped)
             {
-                var options = new RefundCreateOptions
+                if (orderHeaderFromDb.PaymentStatus == SD.PaymentStatusApproved)
                 {
-                    Reason = RefundReasons.RequestedByCustomer,
-                    PaymentIntent = orderHeaderFromDb.PaymentIntentId
-                };
+                    var options = new RefundCreateOptions
+                    {
+                        Reason = RefundReasons.RequestedByCustomer,
+                        PaymentIntent = orderHeaderFromDb.PaymentIntentId
+                    };
 
-                var service = new RefundService();
-                Refund refund = service.Create(options);
+                    var service = new RefundService();
+                    Refund refund = service.Create(options);
 
-                _unitOfWork.OrderHeader.UpdateStatus(orderHeaderFromDb.Id, SD.OrderStatusCancelled, SD.OrderStatusRefunded);
+                    _unitOfWork.OrderHeader.UpdateStatus(orderHeaderFromDb.Id, SD.OrderStatusCancelled, SD.OrderStatusRefunded);
+                }
+                else
+                {
+                    _unitOfWork.OrderHeader.UpdateStatus(orderHeaderFromDb.Id, SD.OrderStatusCancelled, SD.OrderStatusRefunded);
+                }
+
+                _unitOfWork.Save();
+                TempData["success"] = "Order cancelled successully.";
             }
-            else
-            {
-                _unitOfWork.OrderHeader.UpdateStatus(orderHeaderFromDb.Id, SD.OrderStatusCancelled, SD.OrderStatusRefunded);
-            }
 
-            _unitOfWork.Save();
-            TempData["Success"] = "Order cancelled successully.";
+            TempData["error"] = "Unable to cancel the order.";
             return RedirectToAction(nameof(Details), new { id = OrderViewModel.OrderHeader.Id });
         }
 
